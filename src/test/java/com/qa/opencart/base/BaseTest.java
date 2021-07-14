@@ -22,7 +22,6 @@ import com.qa.opencart.pages.SearchResultPage;
 public class BaseTest {
 	//we need to get a driver instance to open browser.
 	//Thus creating a reference and object of DriverFactory
-	
 	DriverFactory df;
 	//Keeping access modifier as public in order to make use in PageTest class
 	//for the instantiation of corresponding Page class.
