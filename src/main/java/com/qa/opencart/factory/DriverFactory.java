@@ -27,7 +27,7 @@ public class DriverFactory {
 	
 	private OptionsManager optionManager;
 	public static String highlight;
-	//Introducing concept of 
+	//Introducing concept of thread local
 	public static ThreadLocal<WebDriver> tldriver = new ThreadLocal<>();
 	
 	/**
