@@ -10,7 +10,10 @@ import org.testng.ITestResult;
 
 import com.qa.opencart.factory.DriverFactory;
 
-
+/**
+ * This class is used to create a Allure Test Listener and we are extending DriverFactory
+ * in order to make use of method getDriver() [i.e method used to get a thread local copy of browser]
+ */
 public class TestAllureListener extends DriverFactory implements ITestListener {
 
 	private static String getTestMethodName(ITestResult iTestResult) {

@@ -5,7 +5,7 @@
 	
 	<listeners>
 	<!-- Commenting listener for extent report as preference is given for allure -->
-	<!-- <listener class-name="com.qa.opencart.listeners.ExtentReportListener"/> -->
+	 	<listener class-name="com.qa.opencart.listeners.ExtentReportListener"/>
 		<listener class-name="com.qa.opencart.listeners.TestAllureListener"/>
 	</listeners>
 	

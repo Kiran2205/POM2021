@@ -51,7 +51,7 @@ public class DriverFactory {
 		
 		switch (browserName.toLowerCase()) {
 		case "chrome":
-			WebDriverManager.chromiumdriver().setup();
+			WebDriverManager.chromedriver().setup();
 			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
 				init_remoteDriver("chrome", browserVersion);
 			} else {

@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Constants {
-	public static final String LOGIN_PAGE_TITLE = "Account Login";
+	public static final String LOGIN_PAGE_TITLE = "Account Login1";
 	public static final String LOGIN_PAGE_URLVALUE = "account/login";
 	public static final String ACCPAGE_TITLE = "My Account";
 	public static final String ACCPAGE_HEADER = "Your Store";

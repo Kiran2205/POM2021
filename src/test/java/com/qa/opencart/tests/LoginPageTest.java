@@ -35,7 +35,7 @@ public class LoginPageTest extends BaseTest{
 	
 	@Description("This test is used to check whether Login Page title is correct or not")
 	@Severity(SeverityLevel.NORMAL)
-	@Test(priority = 1, description = "Verify Login Page Title")
+	@Test(priority = 1)
 	public void loginPageTitleTest() {
 		String title = login.getLoginPageTitle();
 		System.out.println("Login page title is "+title);
