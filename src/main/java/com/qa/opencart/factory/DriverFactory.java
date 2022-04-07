@@ -143,15 +143,15 @@ public class DriverFactory {
 			System.out.println("Running on environment : "+env);
 			try {
 				switch (env.toLowerCase()) {
-				case "qa":
-					fis = new FileInputStream("./src/test/resources/config/qa.config.properties");
-					break;
-				case "uat":
-					fis = new FileInputStream("./src/test/resources/config/uat.config.properties");
-					break;
-				default:
-					System.out.println("Pass correct environment : "+env.toLowerCase());
-					break;
+					case "qa":
+						fis = new FileInputStream("./src/test/resources/config/qa.config.properties");
+						break;
+					case "uat":
+						fis = new FileInputStream("./src/test/resources/config/uat.config.properties");
+						break;
+					default:
+						System.out.println("Pass correct environment : "+env.toLowerCase());
+						break;
 				}
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
