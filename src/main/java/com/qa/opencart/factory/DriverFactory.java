@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
@@ -11,7 +13,11 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -32,7 +38,7 @@ public class DriverFactory {
 	
 	/**
 	 * This method is used to create a driver instance based on the browser name
-	 * @param browserName
+	 * @param prop
 	 * @return {@link WebDriver}
 	 */
 	public WebDriver init_driver(Properties prop) {
@@ -40,18 +46,27 @@ public class DriverFactory {
 		optionManager = new OptionsManager(prop);
 		
 		String browserName = prop.getProperty("browser").trim();
+		String browserVersion = prop.getProperty("browserversion").trim();
 		System.out.println("Browser name is "+browserName);
 		
 		switch (browserName.toLowerCase()) {
 		case "chrome":
-			WebDriverManager.chromedriver().setup();
-//			driver = new ChromeDriver(optionManager.getChromeOptions());
-			tldriver.set(new ChromeDriver(optionManager.getChromeOptions()));
+			WebDriverManager.chromiumdriver().setup();
+			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
+				init_remoteDriver("chrome", browserVersion);
+			} else {
+//				driver = new ChromeDriver(optionManager.getChromeOptions());
+				tldriver.set(new ChromeDriver(optionManager.getChromeOptions()));
+			}
 			break;
 		case "firefox":
 			WebDriverManager.firefoxdriver().setup();
-//			driver = new FirefoxDriver(optionManager.getFirefoxOptions());
-			tldriver.set(new FirefoxDriver(optionManager.getFirefoxOptions()));
+			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
+				init_remoteDriver("firefox", browserVersion);
+			} else {
+//				driver = new FirefoxDriver(optionManager.getFirefoxOptions());
+				tldriver.set(new FirefoxDriver(optionManager.getFirefoxOptions()));
+			}
 			break;
 		case "safari":
 //			driver = new SafariDriver();
@@ -69,7 +84,41 @@ public class DriverFactory {
 		
 		return getDriver();
 	}
-	
+
+	/**
+	 * This method is used to run the execution in remote web driver
+	 * @param browser
+	 * @param browserVersion
+	 */
+	private void init_remoteDriver(String browser, String browserVersion) {
+		System.out.println("Executing in a remote driver");
+
+		if (browser.equalsIgnoreCase("chrome")) {
+			DesiredCapabilities cap = new DesiredCapabilities();
+			cap.setCapability("browserName", "chrome");
+			cap.setCapability("browser_version", browserVersion);
+			cap.setCapability("enableVNC", true);
+			cap.setCapability(ChromeOptions.CAPABILITY, optionManager.getChromeOptions());
+			try {
+				tldriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), cap));
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+		} else if (browser.equalsIgnoreCase("firefox")) {
+			DesiredCapabilities cap = new DesiredCapabilities();
+			cap.setCapability("browserName", "firefox");
+			cap.setCapability("browser_version", browserVersion);
+			cap.setCapability("enableVNC", true);
+			cap.setCapability(FirefoxOptions.FIREFOX_OPTIONS, optionManager.getFirefoxOptions());
+			try {
+				tldriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), cap));
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
 	public static WebDriver getDriver() {
 		return tldriver.get();
 	}
