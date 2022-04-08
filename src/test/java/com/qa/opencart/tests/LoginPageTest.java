@@ -18,9 +18,9 @@ import io.qameta.allure.Story;
 @Epic("Epic 500 : Desgin login page for demo cart application")
 @Story(" US 100 : Develop a feature  with all login page scenarios")
 public class LoginPageTest extends BaseTest{
-	//we need to get a driver instance to open browser.
-	//Thus creating a reference and object of DriverFactory
-	
+//	//we need to get a driver instance to open browser.
+//	//Thus creating a reference and object of DriverFactory
+//
 //	DriverFactory df;
 //	private WebDriver driver;
 //	
